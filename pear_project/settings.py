@@ -12,9 +12,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -168,6 +174,14 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = 'static/images'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -176,3 +190,5 @@ MEDIA_ROOT = 'static/images'
 # REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES' : [ 'rest_framework.permissions.AllowAny' ]}
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+django_heroku.settings(locals())
