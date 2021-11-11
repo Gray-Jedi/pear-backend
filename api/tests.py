@@ -20,8 +20,7 @@ class ApiTests(TestCase):
         self.order = Order.objects.create(
             paymentMethod = "paypal", 
             taxPrice = 1,
-            shippingPrice = 2,
-            totalPrice = 3,
+            totalPrice = 1,
             isPaid = True,
             isDelivered = True,
         ) 
@@ -32,12 +31,11 @@ class ApiTests(TestCase):
             price = 125,
         ) 
 
-        self.shipping_address = ShippingAddress.objects.create(
+        self.location_address = LocationAddress.objects.create(
             address = "123 Pike St",
             city = "Seattle",
             postalCode = "12567",
             country = 'United States',
-            shippingPrice = 10,
         ) 
 
     def test_user_name_should_default_to_email_fail(self):
@@ -60,7 +58,6 @@ class ApiTests(TestCase):
     def test_order_field_types(self): 
         self.assertIsInstance(self.order.paymentMethod, str)
         self.assertIsInstance(self.order.taxPrice, int)
-        self.assertIsInstance(self.order.shippingPrice, int)
         self.assertIsInstance(self.order.totalPrice, int)
         self.assertIsInstance(self.order.isPaid, bool)
         self.assertIsInstance(self.order.isDelivered, bool)
@@ -70,12 +67,11 @@ class ApiTests(TestCase):
         self.assertIsInstance(self.order_item.qty, int)
         self.assertIsInstance(self.order_item.price, int)
 
-    def test_shipping_addr_field_types(self):
-        self.assertIsInstance(self.shipping_address.address, str)
-        self.assertIsInstance(self.shipping_address.city, str)
-        self.assertIsInstance(self.shipping_address.postalCode, str)
-        self.assertIsInstance(self.shipping_address.country, str)
-        self.assertIsInstance(self.shipping_address.shippingPrice, int)
+    def test_location_addr_field_types(self):
+        self.assertIsInstance(self.location_address.address, str)
+        self.assertIsInstance(self.location_address.city, str)
+        self.assertIsInstance(self.location_address.postalCode, str)
+        self.assertIsInstance(self.location_address.country, str)
 
     def test_product_repr(self):
         self.assertEqual(str(self.item.name), "shoes")
@@ -87,8 +83,7 @@ class ApiTests(TestCase):
     def test_order_repr(self):
         self.assertEqual(str(self.order.paymentMethod), "paypal")
         self.assertEqual(int(self.order.taxPrice), 1)
-        self.assertEqual(int(self.order.shippingPrice), 2)
-        self.assertEqual(int(self.order.totalPrice), 3)
+        self.assertEqual(int(self.order.totalPrice), 1)
         self.assertEqual(bool(self.order.isPaid), True)
         self.assertEqual(bool(self.order.isDelivered), True)
 
@@ -97,9 +92,8 @@ class ApiTests(TestCase):
         self.assertEqual(int(self.order_item.qty), 7)
         self.assertEqual(int(self.order_item.price), 125)
 
-    def test_shipping_addr_repr(self):
-        self.assertEqual(str(self.shipping_address.address), "123 Pike St")
-        self.assertEqual(str(self.shipping_address.city), "Seattle")
-        self.assertEqual(str(self.shipping_address.postalCode), "12567")
-        self.assertEqual(str(self.shipping_address.country), "United States")
-        self.assertEqual(int(self.shipping_address.shippingPrice), 10)
+    def test_location_addr_repr(self):
+        self.assertEqual(str(self.location_address.address), "123 Pike St")
+        self.assertEqual(str(self.location_address.city), "Seattle")
+        self.assertEqual(str(self.location_address.postalCode), "12567")
+        self.assertEqual(str(self.location_address.country), "United States")

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from api.models import Product, Order, OrderItem, ShippingAddress
+from api.models import Product, Order, OrderItem, LocationAddress
 from api.serializers import ProductSerializer, OrderSerializer
 from rest_framework import status
 from datetime import datetime
@@ -25,17 +25,16 @@ def addOrderItems(request):
             user=user,
             paymentMethod=data['paymentMethod'],
             taxPrice=data['taxPrice'],
-            shippingPrice=data['shippingPrice'],
             totalPrice=data['totalPrice']
         )
 
-        # Create shipping address
-        shipping = ShippingAddress.objects.create(
+        # Create location address
+        location = LocationAddress.objects.create(
             order=order,
-            address=data['shippingAddress']['address'],
-            city=data['shippingAddress']['city'],
-            postalCode=data['shippingAddress']['postalCode'],
-            country=data['shippingAddress']['country'],
+            address=data['locationAddress']['address'],
+            city=data['locationAddress']['city'],
+            postalCode=data['locationAddress']['postalCode'],
+            country=data['locationAddress']['country'],
         )
 
         # Create order items
