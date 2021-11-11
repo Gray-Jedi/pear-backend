@@ -53,21 +53,39 @@ def getProduct(request, pk):
 #     serializer = ProductSerializer(product, many=False) #false - single item
 # 	return Response(serializer.data)
 
-
+# From Tony
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createProduct(request):
     user = request.user
-
+    data = request.data
     product = Product.objects.create(
         user=user,
-        name='Sample Name',
-        price=0,
-        brand='Sample Brand',
-        countInStock=0,
-        category='Sample Category',
-        description=''
+        name=data['name'],
+        price=data['price'],
+        brand=data['brand'],
+        countInStock=data['countInStock'],
+        category=data['category'],
+        description=data['description'],
+        # image=data['image']
     )
+
+
+
+# @api_view(['POST'])
+# @permission_classes([IsAdminUser])
+# def createProduct(request):
+#     user = request.user
+
+#     product = Product.objects.create(
+#         user=user,
+#         name='Sample Name',
+#         price=0,
+#         brand='Sample Brand',
+#         countInStock=0,
+#         category='Sample Category',
+#         description=''
+#     )
 
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
