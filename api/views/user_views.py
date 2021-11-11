@@ -40,7 +40,7 @@ def registerUser(request):
 		return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated]) #restrict views with permission_classes
+@permission_classes([IsAuthenticated])
 def getUserProfile(request):
 	user = request.user
 	serializer = UserSerializer(user, many=False)
@@ -67,7 +67,7 @@ def updateUserProfile(request):
 @permission_classes([IsAdminUser]) 
 def getUsers(request):
 	users = User.objects.all()
-	serializer = UserSerializer(users, many=True) #True - many items
+	serializer = UserSerializer(users, many=True)
 	return Response(serializer.data)
 
 @api_view(['DELETE'])

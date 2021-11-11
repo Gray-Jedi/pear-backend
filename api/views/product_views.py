@@ -38,21 +38,14 @@ def getProducts(request):
 @api_view(['GET'])
 def getProducts(request):
 	products = Product.objects.all()
-	serializer = ProductSerializer(products, many=True) #True - many items
+	serializer = ProductSerializer(products, many=True)
 	return Response(serializer.data)
 
 @api_view(['GET'])
 def getProduct(request, pk):
-	product = Product.objects.get(_id=pk) #primary key by id
-	serializer = ProductSerializer(product, many=False) #false - single item
+	product = Product.objects.get(_id=pk)
+	serializer = ProductSerializer(product, many=False)
 	return Response(serializer.data)
-
-# @api_view(['GET'])
-# def getProduct(request, pk):
-# 	product = Product.objects.get(_id=pk) #primary key by id
-#     serializer = ProductSerializer(product, many=False) #false - single item
-# 	return Response(serializer.data)
-
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
