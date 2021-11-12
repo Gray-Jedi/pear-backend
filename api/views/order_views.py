@@ -20,7 +20,6 @@ def addOrderItems(request):
         return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
 
-        # Create order
         order = Order.objects.create(
             user=user,
             paymentMethod=data['paymentMethod'],
@@ -28,7 +27,6 @@ def addOrderItems(request):
             totalPrice=data['totalPrice']
         )
 
-        # Create location address
         location = LocationAddress.objects.create(
             order=order,
             address=data['locationAddress']['address'],
@@ -37,7 +35,6 @@ def addOrderItems(request):
             country=data['locationAddress']['country'],
         )
 
-        # Create order items
         for i in orderItems:
             product = Product.objects.get(_id=i['product'])
 
@@ -50,7 +47,6 @@ def addOrderItems(request):
                 image=product.image.url,
             )
 
-            # Update stock
             product.countInStock -= item.qty
             product.save()
 
