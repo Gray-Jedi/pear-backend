@@ -25,10 +25,41 @@ Pear is a peer to peer E-Commerce app that empowers users to post listings for t
 - Place an item in a shopping cart from a listing.
 - Present a location to conduct the transaction.
 
+## Local Set up
+
+    Clone Project Repo:
+
+        git clone https://github.com/Gray-Jedi/pear-backend.git
+
+    Install Dependencies:
+
+        poetry install
+
+    Run Server:
+
+        python manage.py runserver
+
 ## Useful Links
 
 - [Trello Board](https://trello.com/b/Uwi2XXv2/pears)
 
-- [Repo](https://github.com/Marleyman876/pear)
+- [Repo](https://github.com/Gray-Jedi/pear-backend)
 
-## Backend Is Working
+## Deployment
+
+[Heroku - Backend](https://grayjediback.herokuapp.com/)
+
+# Project Resources
+
+[Django Docs](https://docs.djangoproject.com/)
+[React Redux](https://react-redux.js.org/)
+[Dj ango](https://www.djangoproject.com/)
+[Stackoverflow](https://stackoverflow.co m/)
+[Paypal Developer Tools](https://developer . paypal.com/developer/applications)
+[Postman](https://www.postman.com/)
+[Tra versyMedia](https://www.youtube .com/c/TraversyMedia)
+[Dennis Ivanov](https://www.udemy.com/usr/d ennis-ivanov-5/)
+[React](https://reactjs.org/)
+[React Bootstrap](https://react-boo tsrap.github.io/)
+[Miro](https://miro.com/app/)  
+ [Net Ninja](https://www.youtu be.com/c/TheNetNinja)
