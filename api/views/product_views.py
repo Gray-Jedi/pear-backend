@@ -38,35 +38,29 @@ def getProducts(request):
 @api_view(['GET'])
 def getProducts(request):
 	products = Product.objects.all()
-	serializer = ProductSerializer(products, many=True) #True - many items
+	serializer = ProductSerializer(products, many=True)
 	return Response(serializer.data)
 
 @api_view(['GET'])
 def getProduct(request, pk):
-	product = Product.objects.get(_id=pk) #primary key by id
-	serializer = ProductSerializer(product, many=False) #false - single item
+	product = Product.objects.get(_id=pk)
+	serializer = ProductSerializer(product, many=False)
 	return Response(serializer.data)
-
-# @api_view(['GET'])
-# def getProduct(request, pk):
-# 	product = Product.objects.get(_id=pk) #primary key by id
-#     serializer = ProductSerializer(product, many=False) #false - single item
-# 	return Response(serializer.data)
 
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createProduct(request):
     user = request.user
-
+    data = request.data
     product = Product.objects.create(
         user=user,
-        name='Sample Name',
-        price=0,
-        brand='Sample Brand',
-        countInStock=0,
-        category='Sample Category',
-        description=''
+        name=data['name'],
+        price=data['price'],
+        brand=data['brand'],
+        countInStock=data['countInStock'],
+        category=data['category'],
+        description=data['description'],
     )
 
     serializer = ProductSerializer(product, many=False)
@@ -120,18 +114,15 @@ def createProductReview(request, pk):
     product = Product.objects.get(_id=pk)
     data = request.data
 
-    # 1 - Review already exists
     alreadyExists = product.review_set.filter(user=user).exists()
     if alreadyExists:
         content = {'detail': 'Product already reviewed'}
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
-    # 2 - No Rating or 0
     elif data['rating'] == 0:
         content = {'detail': 'Please select a rating'}
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
-    # 3 - Create review
     else:
         review = Review.objects.create(
             user=user,
